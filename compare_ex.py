@@ -208,11 +208,12 @@ def db_shiyan_exp(start,end,form_noise_fun,iter=200,chusu=1000):
     # print(f"{savenames2[i]} have done")
 if __name__=="__main__":
     shi_yan_list=[form_norm_noise_test_Data,form_unif_noise_test_Data,form_amplitude_excursion_test_Data,form_Amplitude_stretch_test_Data,form_Linear_drift_test_Data]
-    # pool=mlp.Pool(3)
-    # pool.starmap_async(m_shiyan,zip(range(1,5),[200]*4,shi_yan_list,[True]*4))
-    # pool.starmap(db_shiyan,zip(range(2,5),[-200]*3,[200]*3,shi_yan_list[2:] ))
-    # pool.close()
-    # pool.join()
+    pool=mlp.Pool(5)
+    pool.starmap_async(m_shiyan,zip(range(5),[200]*5,shi_yan_list))
+    pool.starmap_async(db_shiyan,zip(range(2),[0]*2,[200]*2,shi_yan_list[:2]))
+    pool.starmap(db_shiyan,zip(range(2,5),[-200]*3,[200]*3,shi_yan_list[2:] ))
+    pool.close()
+    pool.join()
     # re_plot(6,"序列长度","讨论不同长度的序列对稳定性的影响",[4,200],[0,0.3])
     # re_plot(8,"序列长度","讨论不同长度的序列对稳定性的影响",[4,200],[0,0.5])
     # re_plot(7,"干扰强度","讨论不同强度的干扰对稳定性的影响",[0,200],[0,0.5])
@@ -230,4 +231,4 @@ if __name__=="__main__":
     # degree_dis1,vg_dis1=from_VG_adj_to_vg_and_degree_distance(VG1,VG2)
     # degree_dis2,vg_dis2=from_VG_adj_to_vg_and_degree_distance(VG1,VG3)
     # print(abs(vg_dis2-vg_dis1)/(vg_dis1+1))
-    m_shiyan(4,200,form_Linear_drift_test_Data,True,ylim=None)
+#     m_shiyan(4,200,form_Linear_drift_test_Data,True,ylim=None)
